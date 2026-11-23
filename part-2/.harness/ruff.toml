@@ -1,0 +1,15 @@
+# Lint rules for the harness (gate: lint, requirement NFR-001). Applies to src/ and tests/.
+line-length = 100
+target-version = "py311"
+
+[lint]
+select = ["E", "F", "W", "I", "B", "S", "UP", "C90"]
+
+[lint.mccabe]
+max-complexity = 10
+
+[lint.isort]
+known-first-party = ["reviewer", "evaluators", "stub_client"]
+
+[lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106"]

@@ -1,0 +1,21 @@
+{
+  "created_utc": "2026-11-23T16:38:54Z",
+  "files": {
+    "tests/conftest.py": "3dbf159356a82892ea01de42deec6bb3abbac5b98255eb018a96267a0deb7d44",
+    "tests/test_app_contract.py": "42c572bef7f3c3b8c5e2c9cb571607aea47467f00d65a8d11f2ff53be792bbec",
+    "tests/test_harness_evaluators.py": "fcb0779669212863b051b18cd3ccac7fe062dc240ba6f3f365f83773f6ad52eb",
+    "evals/dataset.json": "67a547299d76fa0c2f10f7acfa986fc1dc70fb2c3f9269ef8fe21e4c1c585b0c",
+    ".harness/run_harness.py": "b17383772c55e8842330c92927578e50d9734db1ab624e1d0c7878bf2fa49093",
+    ".harness/snapshot.py": "a7b0713dae106f69d4023a501b969f2341391a4c2f85581982da83c42ca9ce36",
+    ".harness/stub_client.py": "db77493222422634c0a1cb8357873ac3062cf1f65b320d8e529ce84c3fd6f8e2",
+    ".harness/evaluators/__init__.py": "d86e2184f38e08317ccb8fdaf70502f10d213aa935bb55ad05805e1179dd32e1",
+    ".harness/evaluators/common.py": "020982ac116e298220549f38fad731fff930bf0bc037d7b3f30d5b8caa7bba8f",
+    ".harness/evaluators/invariants.py": "2c52ea58c8ad51e4689cecc5ff114781f1d7d15931bfaaac086c0fa33ed78eaa",
+    ".harness/evaluators/quality.py": "5742970537573737b7cf5db02972600ed888b6f7476559c10ee25273be6fd6ad",
+    ".harness/evaluators/schema.py": "5800073064d40ac5231cda61cf12c3b953d2cdde0e393ec726448e2a9ddf8764",
+    ".harness/eval_config.json": "41e698da7e98850b8738af0cb85c3b7056db444d0b32619e4da5d7ef685557cf",
+    ".harness/ruff.toml": "045ad3188aa973cee00f69c57a8c18698cfc569ab5a32559c724ffb13e25b9aa",
+    "pytest.ini": "cca4192fe2a29f6beb218b27d3ff2ba6b13e80414823686c708b8c7b36f578c8",
+    "requirements-dev.txt": "561d0966c08299a96dc3b7ff497ca9614e926683c17a63d2487c7f96b5501130"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "weights": {"structural": 0.3, "property": 0.3, "semantic": 0.4},
+  "thresholds": {
+    "aggregate_score": 0.85,
+    "issue_recall": 0.80,
+    "schema_validity_rate": 0.95,
+    "guardrail_pass_rate": 1.0
+  },
+  "service": {"max_attempts": 3, "backoff_seconds": 2, "max_service_error_rate": 0.20},
+  "temperature_max": 0.2,
+  "dataset_min_cases": 15,
+  "required_categories": ["normal", "boundary", "ambiguous", "missing", "malformed", "adversarial"]
+}
