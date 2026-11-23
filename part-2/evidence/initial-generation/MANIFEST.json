@@ -1,0 +1,25 @@
+{
+  "label": "initial",
+  "created_utc": "2026-11-23T16:46:00Z",
+  "git_commit": "6be7f45",
+  "files": {
+    "src/reviewer/__init__.py": "dbccabda967890b8e9624899097f16311bb730ea424378e33fae48e47c008540",
+    "src/reviewer/__main__.py": "bc602940dd5b3aecfe1dcdb96c1a90635975be9a8ac8476089863cd5c511d474",
+    "src/reviewer/errors.py": "7e612786c5d599da64c0d8c312f5bc2dd1f2830fcc6090affc984f111bf60d56",
+    "src/reviewer/guards.py": "193142d8be701cbdbf52f802e889042c53cc13f5bb16e7894dc955800a3d8fe0",
+    "src/reviewer/llm.py": "1cf0467eb2525a4d0103e89bfd445299549218805f04191d5250462a81e766c4",
+    "src/reviewer/parser.py": "54dad719e352c6058f8a26fb208f0f086a7414a1e12a1924942cd3c77838283d",
+    "src/reviewer/service.py": "3d0b54268877534549522a26b0adbb0a4d1f4ababd46c51178be43ec0d0550aa",
+    "prompts/review_system_prompt.md": "837d8b285ac521f983146170ea470097e7ca9129d28183b009bd00fb42e33d5a",
+    "specs/001-code-review-assistant/checklists/requirements.md": "4c4e2dab7592a21a6c2698b5dfae0383b40de5ad29874f709b6a5e682ac0b300",
+    "specs/001-code-review-assistant/contracts/cli.md": "77eb9574124913494c5c419add3ed38bdf48155ea11ab404ee83098cbf838dd5",
+    "specs/001-code-review-assistant/contracts/python-api.md": "8997a088d9d3e26f7271c134a7e706724cec715a29a114ab79f396117b946006",
+    "specs/001-code-review-assistant/contracts/review-result.schema.json": "fb5d6ea71b1f22420c2391645b33cd09814ebccca9d67da9888945aff5847f0b",
+    "specs/001-code-review-assistant/data-model.md": "dc598ef75f834bb595f21dae542f6c6d67fa44224995d2b77799ad0df28a5eaf",
+    "specs/001-code-review-assistant/plan.md": "bf2cee8fd8e112e9d3726421e677c76ab465ad70f5324445796dc3416a321282",
+    "specs/001-code-review-assistant/quickstart.md": "092a1512eb5cba5207e20c9540e90ef2d3004a2401f2ad22760c164c07ee5137",
+    "specs/001-code-review-assistant/research.md": "837beec7354f51a415bedb1b38b992cf920bea5dff759e4e774d4f6a66a7bb6c",
+    "specs/001-code-review-assistant/spec.md": "fd176dd502c550c51a17e7f1e859e527bf6a9c74acf0a95daf62144e2ba0657d",
+    "specs/001-code-review-assistant/tasks.md": "463f9598a3ac8046da25ef615f1e12a73fc142100820e3b7af0f5740bfa18d51"
+  }
+}
