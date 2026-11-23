@@ -1,0 +1,1 @@
+{"run_id": "run-20261123-152702", "timestamp_utc": "2026-11-23T15:27:05Z", "git_commit": "640f74f", "overall": "PASS", "gates": {"integrity": "PASS", "lint": "PASS", "sast": "PASS", "secrets": "PASS", "suppressions": "PASS", "tests": "PASS", "traceability": "PASS"}}

@@ -1,0 +1,105 @@
+{
+  "run_id": "run-20261123-152702",
+  "timestamp_utc": "2026-11-23T15:27:05Z",
+  "git_commit": "640f74f",
+  "python": "3.11.12",
+  "overall": "PASS",
+  "gates": [
+    {
+      "name": "integrity",
+      "requirement": "NFR-008",
+      "status": "PASS",
+      "expected": "Protected files (tests, harness, configs) match the human-approved baseline.",
+      "observed": "all protected files match the baseline",
+      "command": null,
+      "exit_code": null,
+      "duration_s": 0.0,
+      "output_tail": "",
+      "details": [
+        {
+          "modified": [],
+          "missing": [],
+          "added_not_in_baseline": []
+        }
+      ]
+    },
+    {
+      "name": "lint",
+      "requirement": "NFR-001",
+      "status": "PASS",
+      "expected": "ruff exits 0 with zero violations on src/ and tests/.",
+      "observed": "ruff reported no violations",
+      "command": "/Users/vishalrathee/mtech/ai-sdlc/ai-sdlc-assignment/part-1/.venv/bin/python -m ruff check --config .harness/ruff.toml --output-format=concise src tests",
+      "exit_code": 0,
+      "duration_s": 0.08,
+      "output_tail": "All checks passed!\n",
+      "details": []
+    },
+    {
+      "name": "sast",
+      "requirement": "NFR-002",
+      "status": "PASS",
+      "expected": "bandit exits 0: no MEDIUM or HIGH severity findings in src/.",
+      "observed": "bandit reported no medium/high findings",
+      "command": "/Users/vishalrathee/mtech/ai-sdlc/ai-sdlc-assignment/part-1/.venv/bin/python -m bandit -r src -ll -f txt",
+      "exit_code": 0,
+      "duration_s": 0.17,
+      "output_tail": "Run started:2026-11-23 15:27:03.093564+00:00\n\nTest results:\n\tNo issues identified.\n\nCode scanned:\n\tTotal lines of code: 302\n\tTotal lines skipped (#nosec): 0\n\tTotal potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0\n\nRun metrics:\n\tTotal issues (by severity):\n\t\tUndefined: 0\n\t\tLow: 0\n\t\tMedium: 0\n\t\tHigh: 0\n\tTotal issues (by confidence):\n\t\tUndefined: 0\n\t\tLow: 0\n\t\tMedium: 0\n\t\tHigh: 0\nFiles skipped (0):\n\n[stderr]\n[main]\tINFO\tprofile include tests: None\n[main]\tINFO\tprofile exclude tests: None\n[main]\tINFO\tcli include tests: None\n[main]\tINFO\tcli exclude tests: None\n[main]\tINFO\trunning on Python 3.11.12\n",
+      "details": []
+    },
+    {
+      "name": "secrets",
+      "requirement": "NFR-006",
+      "status": "PASS",
+      "expected": "No secret-looking strings and no .env / key files anywhere in the repo.",
+      "observed": "no secrets or secret-bearing files found",
+      "command": null,
+      "exit_code": null,
+      "duration_s": 0.0,
+      "output_tail": "",
+      "details": []
+    },
+    {
+      "name": "suppressions",
+      "requirement": "NFR-007",
+      "status": "PASS",
+      "expected": "src/ contains no noqa / nosec / type-ignore / lint-disable comments.",
+      "observed": "no suppression comments in src/",
+      "command": null,
+      "exit_code": null,
+      "duration_s": 0.0,
+      "output_tail": "",
+      "details": []
+    },
+    {
+      "name": "tests",
+      "requirement": "AC-*, NFR-003",
+      "status": "PASS",
+      "expected": "pytest exits 0: every AC test passes and line coverage of ratelimiter >= 90%.",
+      "observed": "all tests passed and coverage threshold met",
+      "command": "/Users/vishalrathee/mtech/ai-sdlc/ai-sdlc-assignment/part-1/.venv/bin/python -m pytest -q -p no:cacheprovider --junitxml=/Users/vishalrathee/mtech/ai-sdlc/ai-sdlc-assignment/part-1/evidence/harness-results/run-20261123-152702-junit.xml --cov=ratelimiter --cov-report=term-missing --cov-fail-under=90",
+      "exit_code": 0,
+      "duration_s": 1.96,
+      "output_tail": "........................................................................ [ 77%]\n.....................                                                    [100%]\n=============================== warnings summary ===============================\ntests/test_http_api.py::test_ac_023_allowed_response_has_body_and_ratelimit_headers\n  /Users/vishalrathee/mtech/ai-sdlc/ai-sdlc-assignment/part-1/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n================================ tests coverage ================================\n______________ coverage: platform darwin, python 3.11.12-final-0 _______________\n\nName                          Stmts   Miss  Cover   Missing\n-----------------------------------------------------------\nsrc/ratelimiter/__init__.py       1      0   100%\nsrc/ratelimiter/app.py           55      3    95%   73-74, 86\nsrc/ratelimiter/config.py        57      0   100%\nsrc/ratelimiter/errors.py         5      0   100%\nsrc/ratelimiter/limiter.py       60      1    98%   49\nsrc/ratelimiter/main.py          10     10     0%   7-25\nsrc/ratelimiter/store.py         20      0   100%\n-----------------------------------------------------------\nTOTAL                           208     14    93%\nRequired test coverage of 90% reached. Total coverage: 93.27%\n93 passed, 1 warning in 0.66s\n",
+      "details": []
+    },
+    {
+      "name": "traceability",
+      "requirement": "all",
+      "status": "PASS",
+      "expected": "Every AC/NFR id in specs/*/spec.md has a test (or enforcing gate); no orphan tests.",
+      "observed": "all 39 spec ids are enforced",
+      "command": null,
+      "exit_code": null,
+      "duration_s": 0.0,
+      "output_tail": "",
+      "details": [
+        {
+          "spec_ids": 39,
+          "missing": [],
+          "orphans": []
+        }
+      ]
+    }
+  ]
+}
