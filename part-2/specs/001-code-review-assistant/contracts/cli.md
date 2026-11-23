@@ -18,6 +18,7 @@ Run with `PYTHONPATH=src` (or an installed package).
 | Exit code | Meaning |
 |---|---|
 | 0 | a result was printed (any `status`) |
+| 1 | other `ReviewerError` (provider rejected the request with a non-service status, e.g. 400/404) |
 | 2 | usage error, unreadable file, `ValueError`, or `ConfigurationError` |
 | 3 | `LLMServiceError` (provider/service failure) |
 | 4 | `ModelOutputError` (no JSON object after one retry) |

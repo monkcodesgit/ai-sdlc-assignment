@@ -16,12 +16,16 @@ and the alternatives rejected.
 ## R2. Error classification
 
 - **Decision**: map `httpx.TimeoutException`, `httpx.TransportError`, HTTP 401, 403, 408,
-  409, 429, 5xx and 529 to `LLMServiceError`; the application never retries it. Unparsable
-  replies → `ModelOutputError` after exactly one retry.
+  409, 429, 5xx and 529 to `LLMServiceError`; the application never retries it. Every other
+  non-2xx status (400, 404, 413, 422, …) raises plain `ReviewerError`, because it signals an
+  application or configuration defect that must count as a FAIL. Unparsable replies →
+  `ModelOutputError` after exactly one retry.
 - **Rationale**: Constitution VI and clarification Q2: only the harness retries (3 attempts)
   so service errors are counted honestly and retries don't multiply.
   `test_eval_005_service_errors_propagate_without_a_retry` asserts exactly one call.
-- **Alternatives**: app-level backoff (hides outages from the harness; rejected in clarify).
+- **Alternatives**: app-level backoff (hides outages from the harness; rejected in clarify);
+  treating every non-2xx as a service error (would hide request-building bugs or a wrong
+  model id as SERVICE_ERROR / INCONCLUSIVE instead of FAIL; rejected in analyze, finding D2).
 
 ## R3. JSON extraction
 

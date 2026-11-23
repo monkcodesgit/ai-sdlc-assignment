@@ -140,8 +140,11 @@ retry), `ConfigurationError` (missing credentials/settings).
 - `OpenAICompatibleClient`: `POST {LLM_BASE_URL}/chat/completions`, Bearer `LLM_API_KEY`
   (optional for local Ollama); text = `choices[0].message.content`.
 - Both: `temperature=0.0`, `max_tokens=2048`, `httpx` timeout 60 s. `httpx.TimeoutException`
-  / `httpx.TransportError` and status 401/403/408/409/429/5xx/529 → `LLMServiceError`; other
-  4xx → `LLMServiceError` too (provider-side rejection, message without secrets).
+  / `httpx.TransportError` and status 401/403/408/409/429/5xx/529 → `LLMServiceError`. Any
+  other non-2xx (e.g. 400 malformed request, 404 unknown model, 422) is an application or
+  configuration defect, NOT a service error (Constitution VI): raise plain `ReviewerError`
+  with the status code and a short reason, never the key. A 2xx body that is not the
+  expected provider JSON shape → `LLMServiceError`.
 - `build_client_from_env()`: `LLM_PROVIDER` (default `anthropic`). Anthropic needs
   `ANTHROPIC_API_KEY`; `REVIEW_MODEL` defaults to `claude-haiku-5-5`. `openai_compatible`
   needs `LLM_BASE_URL` and `REVIEW_MODEL`. Missing → `ConfigurationError`. Never logs keys.
@@ -161,8 +164,8 @@ retry), `ConfigurationError` (missing credentials/settings).
 
 ### `__main__.py`
 `python -m reviewer review PATH [--diff]`: reads file as UTF-8, calls `review_code`, prints
-JSON (indent 2). Exit 0 on result, 2 on usage/ValueError/ConfigurationError, 3 on
-`LLMServiceError`, 4 on `ModelOutputError`; error message to stderr, never credentials.
+JSON (indent 2). Exit 0 on result, 1 on any other `ReviewerError`, 2 on
+usage/ValueError/ConfigurationError, 3 on `LLMServiceError`, 4 on `ModelOutputError`; error message to stderr, never credentials.
 
 ### `prompts/review_system_prompt.md` [INV-002..INV-008, BEH-001..BEH-007, GR-001, GR-003]
 Version line at top; role; ONE JSON object only; full schema and enums; category

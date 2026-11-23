@@ -32,10 +32,12 @@ No other fields (INV-002).
 |---|---|---|
 | `ok` | null | 0–10 |
 | `needs_clarification` | non-empty string | empty |
-| `refused` | (null from pre-check) | empty |
+| `refused` | null (pre-check) · null or 1–300-char string (model) | empty |
 
 Status is decided once per request: by the pre-check, or by the model. There are no other
-state transitions.
+state transitions. A `refused` result produced by the pre-check (oversize input, FR-006)
+always has `clarification_question: null`; a `refused` result produced by the model (GR-003)
+MAY carry a question, since INV-006 constrains only `findings` for `refused`.
 
 ## Finding
 
@@ -67,6 +69,7 @@ state transitions.
 | `ModelOutputError` | no JSON object after one retry | structural FAIL |
 | `LLMServiceError` | timeout, connection, HTTP 401/403/408/409/429/5xx/529 | SERVICE_ERROR, retried by harness, excluded from scores |
 | `ConfigurationError` | missing credentials/settings | setup error |
+| `ReviewerError` (base, raised directly) | provider returned any other non-2xx (400, 404, 422, …) | application FAIL, not retried |
 
 All derive from `ReviewerError` (except `ValueError`).
 

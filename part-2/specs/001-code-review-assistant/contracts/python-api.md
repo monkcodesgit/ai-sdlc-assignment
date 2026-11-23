@@ -24,7 +24,7 @@ def review_code(code: str, kind: str = "snippet", language: str = "python", *,
 ## `reviewer.errors`
 
 ```python
-class ReviewerError(Exception): ...
+class ReviewerError(Exception): ...          # also raised directly for other non-2xx (FAIL)
 class LLMServiceError(ReviewerError): ...    # provider/transport failure (SERVICE)
 class ModelOutputError(ReviewerError): ...   # no JSON object after one retry (FAIL)
 class ConfigurationError(ReviewerError): ... # missing credentials/settings
