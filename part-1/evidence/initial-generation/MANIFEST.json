@@ -1,0 +1,23 @@
+{
+  "label": "initial",
+  "created_utc": "2026-11-23T15:26:33Z",
+  "git_commit": "dfc55a6",
+  "files": {
+    "src/ratelimiter/__init__.py": "a7d617e0a37e0192001f63c9df169277f9dff7544e951d922c88b204cf1c9a98",
+    "src/ratelimiter/app.py": "1546f42a14d79ab622b2f00f3c2c2e3a5008001df9325faf8aff0000c94fe3ed",
+    "src/ratelimiter/config.py": "2e3d1165028ad0d323d06d9ef23d29321190308e8b0c2a1429c93f11169ca34e",
+    "src/ratelimiter/errors.py": "dc92451ce2bcf26ee1ce17cef2382782f9111cac3345015b25531d5e2a2127ab",
+    "src/ratelimiter/limiter.py": "eb94c5d04a7bc34f2acd7363c86151d26f1c2c7fa52d37c68a76799ed4f355ef",
+    "src/ratelimiter/main.py": "8f5c3cdfad011b80a2240076f039bc2b8205a2bbdd965c4faaefd6094aa13d3f",
+    "src/ratelimiter/store.py": "21cf2094284ed81cb5932704045e68ab810b30638e2938952918ba813cbda733",
+    "specs/001-tiered-rate-limiter/checklists/requirements.md": "c3cb736df88f2bb095fb377efd8fb9eedfa921649e24b1bd85d6e2b67c5bd5a6",
+    "specs/001-tiered-rate-limiter/contracts/http-api.md": "6db0ea26b24295d123d18466d683cecff618cf6ac203164deea77b86225f94a1",
+    "specs/001-tiered-rate-limiter/contracts/python-api.md": "48d37e0c218a895c05dfc665dd394389d1d33b2ca75d640e871f1b25a727edd6",
+    "specs/001-tiered-rate-limiter/data-model.md": "2507e710f75fb64c529bcd3b244b7ba70a2620a051358c1071fcce45628a80f4",
+    "specs/001-tiered-rate-limiter/plan.md": "db62fa475c50124f3db6896b9f5aaa145f39df86924e34cbfd524a070889b183",
+    "specs/001-tiered-rate-limiter/quickstart.md": "6861358ced369c3ec0dcf67f8349318346e9593c0184083883fae99943227760",
+    "specs/001-tiered-rate-limiter/research.md": "97b41460cf3fabf1be6ed7c05d2c8bebb06db50a94cdca2818854c096cabaebf",
+    "specs/001-tiered-rate-limiter/spec.md": "b4b22a0d26370e39a250dcc38c631ea1fd2fd8464c93f66f7b1a19106efaf359",
+    "specs/001-tiered-rate-limiter/tasks.md": "5cd0546a5a230a767ce8bb10540fe3ca787cac8facb7a96b4a3bcbb8ec316875"
+  }
+}
