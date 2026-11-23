@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-result.schema.json",
+  "title": "ReviewResult (SCH-001)",
+  "description": "Cross-field rules not expressible here: INV-003 line bounds, INV-004 verbatim evidence, INV-005 unique ids, INV-006 status consistency, INV-007 valid Python, INV-008 added diff lines.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "summary", "clarification_question", "findings"],
+  "properties": {
+    "status": {"enum": ["ok", "needs_clarification", "refused"]},
+    "summary": {"type": "string", "minLength": 1, "maxLength": 500},
+    "clarification_question": {
+      "anyOf": [{"type": "null"}, {"type": "string", "minLength": 1, "maxLength": 300}]
+    },
+    "findings": {"type": "array", "maxItems": 10, "items": {"$ref": "#/$defs/finding"}}
+  },
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "category", "severity", "line_start", "line_end", "title",
+                   "evidence", "rationale", "suggestion", "confidence"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^F[1-9][0-9]*$"},
+        "category": {"enum": ["security", "bug", "performance", "maintainability", "error-handling"]},
+        "severity": {"enum": ["low", "medium", "high", "critical"]},
+        "line_start": {"type": "integer", "minimum": 1},
+        "line_end": {"type": "integer", "minimum": 1},
+        "title": {"type": "string", "minLength": 1, "maxLength": 120},
+        "evidence": {"type": "string", "minLength": 1, "maxLength": 300},
+        "rationale": {"type": "string", "minLength": 20, "maxLength": 600},
+        "suggestion": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["summary", "refactored_code"],
+          "properties": {
+            "summary": {"type": "string", "minLength": 15, "maxLength": 400},
+            "refactored_code": {
+              "anyOf": [{"type": "null"}, {"type": "string", "maxLength": 4000}]
+            }
+          }
+        },
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    }
+  }
+}
