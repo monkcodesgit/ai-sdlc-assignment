@@ -41,16 +41,21 @@ and the alternatives rejected.
 
 - **Decision**: after the model replies, replace matches in every output string with
   `[REDACTED]`:
-  - `sk-[A-Za-z0-9_\-]{20,}` (hyphen included: the locked test secret is
-    `sk-FAKE-0000-1111-2222-3333`)
+  - `sk-[A-Za-z0-9_\-]{20,}` (hyphen included: the locked `SECRET` constant in
+    `tests/test_app_contract.py` contains hyphens after the `sk-` prefix)
   - `AKIA[0-9A-Z]{16}`
   - `gh[pousr]_[A-Za-z0-9]{36,}`
   - `-----BEGIN [A-Z ]*PRIVATE KEY-----` … `-----END [A-Z ]*PRIVATE KEY-----` (DOTALL)
   - quoted values of ≥ 8 chars assigned to names containing `api_key|secret|password|passwd|token`
     (case-insensitive; `=` or `:`), replacing only the quoted value.
 - **Rationale**: GR-002 / clarify sheet: the model still sees the code; redaction is a
-  deterministic post-step that doesn't rely on the model. The assignment pattern covers
-  `password = "hunter2hunter2"` in the locked test.
+  deterministic post-step that doesn't rely on the model. The assignment pattern covers the
+  quoted `password` assignment in the locked GR-002 redaction test.
+- **Amendment 2026-11-23 (human decision after harness run `run-20261123-164831`)**: this
+  section previously quoted the two fake test values verbatim, which the NFR-002 secrets gate
+  (rightly) flagged because it scans `specs/`. They are now described, not quoted; the
+  redaction decisions are unchanged. Fake secret-shaped strings belong only in the paths the
+  gate excludes (`tests/`, `evals/dataset.json`, `.harness/`, `speckit-prompts/`).
 - **Alternatives**: redacting input before the model (would stop the model citing the
   hardcoded-secret issue with correct evidence); entropy detection (false positives).
 
