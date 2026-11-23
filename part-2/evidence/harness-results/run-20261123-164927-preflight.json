@@ -1,0 +1,98 @@
+[
+  {
+    "name": "integrity",
+    "requirement": "NFR-003",
+    "status": "PASS",
+    "expected": "Dataset, evaluators, thresholds, tests and harness match the human-approved baseline.",
+    "observed": "all protected files match the baseline",
+    "command": null,
+    "exit_code": null,
+    "duration_s": 0.0,
+    "output_tail": "",
+    "details": [
+      {
+        "modified": [],
+        "missing": [],
+        "added_not_in_baseline": []
+      }
+    ]
+  },
+  {
+    "name": "dataset",
+    "requirement": "FR-002",
+    "status": "PASS",
+    "expected": "evals/dataset.json has >= 15 well-formed cases covering all categories, each with an oracle.",
+    "observed": "20 cases, all categories covered, ground truth consistent",
+    "command": null,
+    "exit_code": null,
+    "duration_s": 0.0,
+    "output_tail": "",
+    "details": []
+  },
+  {
+    "name": "threshold-declared",
+    "requirement": "EVAL-001..004",
+    "status": "PASS",
+    "expected": "The spec declares the same thresholds that the harness enforces (declared BEFORE evaluation).",
+    "observed": "spec thresholds match eval_config.json",
+    "command": null,
+    "exit_code": null,
+    "duration_s": 0.0,
+    "output_tail": "",
+    "details": []
+  },
+  {
+    "name": "traceability",
+    "requirement": "all",
+    "status": "PASS",
+    "expected": "Every spec requirement id is referenced by a test, dataset case, evaluator check or enforcing gate; no dataset/test id is missing from the spec.",
+    "observed": "all 35 spec ids are covered",
+    "command": null,
+    "exit_code": null,
+    "duration_s": 0.0,
+    "output_tail": "",
+    "details": [
+      {
+        "spec_ids": 35,
+        "uncovered": [],
+        "ids_not_in_spec": []
+      }
+    ]
+  },
+  {
+    "name": "secrets",
+    "requirement": "NFR-002",
+    "status": "PASS",
+    "expected": "No API keys, tokens, .env files or key files in the repository.",
+    "observed": "no secrets or secret-bearing files found",
+    "command": null,
+    "exit_code": null,
+    "duration_s": 0.0,
+    "output_tail": "",
+    "details": []
+  },
+  {
+    "name": "lint",
+    "requirement": "NFR-001",
+    "status": "PASS",
+    "expected": "ruff exits 0 with zero violations on src/ and tests/.",
+    "observed": "ruff reported no violations",
+    "command": "/Users/vishalrathee/mtech/ai-sdlc/ai-sdlc-assignment/part-2/.venv/bin/python -m ruff check --config .harness/ruff.toml --output-format=concise src tests",
+    "exit_code": 0,
+    "duration_s": 0.07,
+    "output_tail": "All checks passed!\n",
+    "details": []
+  },
+  {
+    "name": "unit-tests",
+    "requirement": "FR-001..006, INV-*, GR-*",
+    "status": "PASS",
+    "expected": "pytest exits 0: deterministic application contract tests and evaluator self-tests pass.",
+    "observed": "all unit tests passed",
+    "command": "/Users/vishalrathee/mtech/ai-sdlc/ai-sdlc-assignment/part-2/.venv/bin/python -m pytest -q -p no:cacheprovider --junitxml=/Users/vishalrathee/mtech/ai-sdlc/ai-sdlc-assignment/part-2/evidence/harness-results/run-20261123-164927-junit.xml",
+    "exit_code": 0,
+    "duration_s": 0.33,
+    "output_tail": "...........................................................              [100%]\n59 passed in 0.06s\n",
+    "details": []
+  }
+]
