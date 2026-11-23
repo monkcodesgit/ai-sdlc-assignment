@@ -51,7 +51,7 @@ REFILLED --tokens <  cost--> UNCHANGED (consumes nothing)        → denied
 | Field | Type | Rules | Error |
 |-------|------|-------|-------|
 | `client_id` | `str` | 1–128 chars, `^[A-Za-z0-9._:@-]+$` (ASCII only) | `InvalidRequestError` / 422 |
-| `tier` | `str` | HTTP: non-empty string; then must exist in the tier mapping | 422 (shape) / `UnknownTierError` / 400 |
+| `tier` | `str` | HTTP: 1–32 characters; then must exist in the tier mapping (exact, case-sensitive) | 422 (shape) / `UnknownTierError` / 400 |
 | `cost` | `int` | ≥ 1, not `bool`, default 1; ≤ tier capacity | `InvalidRequestError` / 422; `CostExceedsCapacityError` / 400 |
 
 - HTTP body must be a JSON object with no extra keys.

@@ -121,7 +121,7 @@ applied and invalid configurations are rejected.
 - Request is both invalid (bad client id) and for an unknown tier: reported as an invalid request,
   because request validation precedes tier lookup (AC-020).
 - Wrong HTTP method on the check endpoint: 405 (AC-031).
-- Empty or missing `tier` over HTTP: 422 (malformed request), whereas a non-empty unconfigured
+- Empty, missing or longer-than-32-character `tier` over HTTP: 422 (malformed request), whereas a non-empty unconfigured
   tier such as `Free` or `gold`: 400 `unknown_tier`. Called directly, the limiter rejects an empty
   tier as unknown (AC-014).
 - `RATELIMITER_TIERS_FILE` set to a missing, oversized or invalid file: the service refuses to
@@ -186,16 +186,17 @@ applied and invalid configurations are rejected.
 **HTTP interface**
 
 - **FR-019**: `POST /v1/check` MUST accept a JSON object `{"client_id": str, "tier": str,
-  "cost": int (optional, default 1)}` and reject extra fields. `tier` MUST be a non-empty string
-  at the request-shape level; tier-name pattern and existence are checked afterwards (FR-022).
+  "cost": int (optional, default 1)}` and reject extra fields. `tier` MUST be a string of 1–32
+  characters at the request-shape level (no valid tier name is longer than 32, FR-011); tier-name
+  pattern and existence are checked afterwards (FR-022).
 - **FR-020**: An allowed check MUST return 200 with body `{"allowed": true, "limit", "remaining",
   "retry_after": 0, "reset"}` and headers `X-RateLimit-Limit`, `X-RateLimit-Remaining`,
   `X-RateLimit-Reset`, and no `Retry-After` header.
 - **FR-021**: A denied check MUST return 429 with body `{"allowed": false, "error": "rate_limited",
   "limit", "remaining", "retry_after", "reset"}`, the same three headers, and `Retry-After`
   (integer seconds).
-- **FR-022**: An unknown tier (any non-empty tier string that is not configured, including names
-  differing only in case or whitespace) MUST return 400 `{"error": "unknown_tier"}`; cost above capacity MUST
+- **FR-022**: An unknown tier (any 1–32 character tier string that is not configured, including
+  names differing only in case or whitespace) MUST return 400 `{"error": "unknown_tier"}`; cost above capacity MUST
   return 400 `{"error": "cost_exceeds_capacity"}`.
 - **FR-023**: Any schema-invalid request (missing or invalid fields, wrong types, extra fields,
   malformed JSON, non-object body) MUST return 422 with the standard validation body: a `detail`
@@ -298,3 +299,6 @@ applied and invalid configurations are rejected.
 - 2026-11-23: Clarification session (5 Q&A): added FR-014a (tier file via
   `RATELIMITER_TIERS_FILE`) and FR-027 (logging); clarified FR-009 (monotonic default clock),
   FR-019/FR-022 (empty tier → 422, unconfigured tier → 400), FR-023 (422 body). No AC/NFR changed.
+- 2026-11-23: Analysis fix I1: FR-019/FR-022 and edge cases now bound HTTP `tier` to 1–32
+  characters at request-shape level (longer → 422), matching the plan and data model. No AC/NFR
+  changed; no locked test affected.

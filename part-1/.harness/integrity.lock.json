@@ -1,0 +1,16 @@
+{
+  "created_utc": "2026-11-23T15:20:57Z",
+  "files": {
+    "tests/conftest.py": "c4ddd0e08390b3e4a7eecf262eb2d3898f1c9b894fff9a3818dca7ec0f3f5e30",
+    "tests/test_core_limiter.py": "68422e6ebc3e6d0bf22e2e4755f7d32a4a02056506e81f4db08e483e2e97ec22",
+    "tests/test_http_api.py": "bb93566f1e2a2e61e03856969a3d06e6ab3ee0a6a26958bc931af86abb61fb60",
+    "tests/test_nfr.py": "93086578e1ef91d96985e451bc27ebb6a6882e1ef0156e8a8de612f3a56db6ec",
+    "tests/test_robustness.py": "25f2619a0ca4a91ccad9aca76043c8e829397636f5cb6547a1221a7a2eab05f2",
+    "tests/test_tiers_config.py": "8c25700d330a50949951278f7955cdb9e274447a9589737734454dc5de1c22d6",
+    "pytest.ini": "bb7828f3bdc24bf59f08c1eb7786114a213d36f04e7a9a43e3799a80e7ef85b0",
+    "requirements-dev.txt": "aeb7933174039bc4470d0ee8f2d7dde40270966de6f182464a5820477c017856",
+    ".harness/run_harness.py": "666720db5d6d1e2b9e93fe6b0c160abb5439a80d146ea780e1595cceb98837d9",
+    ".harness/snapshot.py": "c80f7c78e80f970e3fff5bd89505c76b1d4dcd5ee358107cea41adc592c331dd",
+    ".harness/ruff.toml": "50810d2485d59a49879387bab1b8ccdbf4bbeda4acdcd00f0a21cb9897ea91b7"
+  }
+}

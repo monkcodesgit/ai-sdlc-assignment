@@ -56,8 +56,8 @@ evicted (documented limitation). 3 default tiers; up to 64 KiB tier config file.
 No violations; Complexity Tracking is empty.
 
 **Environment risks (not principle violations, must be resolved before `/speckit-implement`)**:
-`.venv` is Python 3.9.6 (R-001) and `.harness/` (ruff config, harness runner) is not present in
-the repository yet (R-007).
+resolved 2026-11-23: `.venv` rebuilt on Python 3.11.12 (R-001); `.harness/` copied from the
+assignment kit (R-007). Remaining human step: `python .harness/run_harness.py --lock`.
 
 ## Project Structure
 

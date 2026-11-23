@@ -1,0 +1,16 @@
+# Lint + security-flavoured lint rules for the harness (gate: lint, requirement NFR-001).
+line-length = 100
+target-version = "py311"
+
+[lint]
+# E/W pycodestyle, F pyflakes, I isort, B bugbear, S flake8-bandit, UP pyupgrade, C90 complexity
+select = ["E", "F", "W", "I", "B", "S", "UP", "C90"]
+
+[lint.mccabe]
+max-complexity = 10
+
+[lint.isort]
+known-first-party = ["ratelimiter"]
+
+[lint.per-file-ignores]
+"tests/**" = ["S101"]

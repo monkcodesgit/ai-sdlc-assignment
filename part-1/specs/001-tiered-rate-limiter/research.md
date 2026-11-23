@@ -77,6 +77,9 @@ All Technical Context unknowns are resolved below. Format: Decision / Rationale 
   present in `part-1/` (only `evidence/` placeholders are committed). The plan must not create
   it (Principle V).
 - **Alternatives**: Author a harness ourselves (rejected: harness is a validation asset).
+- **Resolution (2026-11-23)**: `.harness/` copied unchanged from the assignment kit
+  (`Part-1A-kit/Assignment-1/Part-1A/.harness/`). Its lint gate runs
+  `ruff check --config .harness/ruff.toml src tests`; use `python .harness/run_harness.py`.
 
 ## R-008 Default clock and start-up configuration
 

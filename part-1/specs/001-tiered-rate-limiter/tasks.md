@@ -26,8 +26,9 @@ satisfies (Constitution Principle VII). Order follows errors → config → stor
 
 ## Environment prerequisites (human, before `/speckit-implement`; not tasks)
 
-- Recreate `.venv` with Python 3.11+ (research R-001; `test_nfr_005` needs ≥ 3.10).
-- Add the locked `.harness/` directory (research R-007).
+- [x] `.venv` recreated with Python 3.11.12 (research R-001).
+- [x] Locked `.harness/` copied from the assignment kit (research R-007).
+- [ ] Human runs `python .harness/run_harness.py --lock` to baseline integrity hashes.
 
 ---
 
@@ -111,8 +112,8 @@ code present.
 
 - [ ] T009 [US2] [FR-019, FR-023, AC-025, AC-027] In `src/ratelimiter/app.py` define the Pydantic
   v2 request model `CheckRequest` with `model_config = ConfigDict(extra="forbid")`:
-  `client_id: StrictStr` (data-model.md `CheckRequest.client_id`), `tier: StrictStr` narrowed for
-  HTTP to `min_length=1, max_length=32` (data-model.md `CheckRequest.tier`; pattern deliberately
+  `client_id: StrictStr` (data-model.md `CheckRequest.client_id`), `tier: StrictStr` with
+  `min_length=1, max_length=32` (data-model.md `CheckRequest.tier`; pattern deliberately
   NOT checked here so `Free` yields 400, research R-005), `cost: StrictInt` (data-model.md
   `CheckRequest.cost`, default 1, `ge=1`)
 - [ ] T010 [US2] [FR-009, FR-020, FR-021, FR-024, FR-026, AC-023, AC-024, AC-025, AC-028, AC-029,
