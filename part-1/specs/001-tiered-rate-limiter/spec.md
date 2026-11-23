@@ -15,6 +15,26 @@ State is in-memory only." (full description: `speckit-prompts/02-specify.md`)
 > **ID stability**: The AC-nnn and NFR-nnn IDs below are fixed by the input and are traced by the
 > harness to tests named `test_ac_<nnn>_*` / `test_nfr_<nnn>_*`. They MUST NOT be renumbered.
 
+## Clarifications
+
+### Session 2026-11-23
+
+- Q: When the service starts, how should it find a custom tier configuration file? → A: Optional
+  environment variable `RATELIMITER_TIERS_FILE` names the JSON file; unset → default tiers; set
+  but invalid → the service refuses to start.
+- Q: Over HTTP, how should a missing/empty `tier` be handled versus a well-formed but unconfigured
+  tier name? → A: `tier` must be a non-empty string as part of the request shape (missing, empty
+  or non-string → 422); any non-empty name not configured (e.g. `gold`, `Free`, ` free `) → 400
+  `unknown_tier`.
+- Q: What should the body of a 422 "invalid request" response contain? → A: The framework's
+  standard validation body (a `detail` list naming each invalid field and reason); it must never
+  contain stack traces or source-file paths.
+- Q: When the service runs for real, what clock should it use by default? → A: A monotonic clock
+  (seconds, never affected by wall-clock adjustments), overridable by injecting any time source.
+- Q: What should the service log while it runs? → A: Minimal: start-up info (tier source loaded)
+  and configuration/internal errors only; no per-request logs; never log secrets; not part of the
+  acceptance tests.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Per-tier limits (Priority: P1)
@@ -82,6 +102,9 @@ applied and invalid configurations are rejected.
    parameters apply and tiers not in it are unknown (AC-015).
 2. **Given** an invalid configuration or file, **When** it is loaded, **Then** it is rejected with
    a configuration error (AC-016, AC-017).
+3. **Given** `RATELIMITER_TIERS_FILE` names a valid tier file, **When** the service starts,
+   **Then** it enforces those tiers; if the variable is unset, it enforces the default tiers
+   (FR-014a).
 
 ---
 
@@ -98,6 +121,11 @@ applied and invalid configurations are rejected.
 - Request is both invalid (bad client id) and for an unknown tier: reported as an invalid request,
   because request validation precedes tier lookup (AC-020).
 - Wrong HTTP method on the check endpoint: 405 (AC-031).
+- Empty or missing `tier` over HTTP: 422 (malformed request), whereas a non-empty unconfigured
+  tier such as `Free` or `gold`: 400 `unknown_tier`. Called directly, the limiter rejects an empty
+  tier as unknown (AC-014).
+- `RATELIMITER_TIERS_FILE` set to a missing, oversized or invalid file: the service refuses to
+  start; it never silently falls back to the default tiers (FR-014a).
 
 ## Requirements *(mandatory)*
 
@@ -120,7 +148,8 @@ applied and invalid configurations are rejected.
   last-refill time MUST NOT move backwards.
 - **FR-008**: Concurrent requests MUST never be allowed beyond the tokens available.
 - **FR-009**: The current time MUST be supplied to the limiter as a replaceable time source so that
-  behaviour is reproducible.
+  behaviour is reproducible. When none is supplied, the default MUST be a monotonic clock in
+  seconds (unaffected by wall-clock adjustments).
 
 **Tiers and configuration**
 
@@ -135,6 +164,11 @@ applied and invalid configurations are rejected.
   has capacity or refill_rate above 1,000,000.
 - **FR-014**: Tiers MUST be loadable from a JSON file of at most 64 KiB; a missing file, invalid
   JSON, non-object content or an oversized file MUST be rejected.
+- **FR-014a**: At service start-up, if the environment variable `RATELIMITER_TIERS_FILE` is set,
+  tiers MUST be loaded from the file it names (per FR-014); if it is unset, the default tiers
+  (FR-010) MUST be used. If the file is set but invalid, the service MUST fail to start with a
+  configuration error rather than fall back to defaults. Tiers passed explicitly when the service
+  is constructed take precedence over the environment variable.
 
 **Input validation**
 
@@ -152,21 +186,30 @@ applied and invalid configurations are rejected.
 **HTTP interface**
 
 - **FR-019**: `POST /v1/check` MUST accept a JSON object `{"client_id": str, "tier": str,
-  "cost": int (optional, default 1)}` and reject extra fields.
+  "cost": int (optional, default 1)}` and reject extra fields. `tier` MUST be a non-empty string
+  at the request-shape level; tier-name pattern and existence are checked afterwards (FR-022).
 - **FR-020**: An allowed check MUST return 200 with body `{"allowed": true, "limit", "remaining",
   "retry_after": 0, "reset"}` and headers `X-RateLimit-Limit`, `X-RateLimit-Remaining`,
   `X-RateLimit-Reset`, and no `Retry-After` header.
 - **FR-021**: A denied check MUST return 429 with body `{"allowed": false, "error": "rate_limited",
   "limit", "remaining", "retry_after", "reset"}`, the same three headers, and `Retry-After`
   (integer seconds).
-- **FR-022**: An unknown tier MUST return 400 `{"error": "unknown_tier"}`; cost above capacity MUST
+- **FR-022**: An unknown tier (any non-empty tier string that is not configured, including names
+  differing only in case or whitespace) MUST return 400 `{"error": "unknown_tier"}`; cost above capacity MUST
   return 400 `{"error": "cost_exceeds_capacity"}`.
 - **FR-023**: Any schema-invalid request (missing or invalid fields, wrong types, extra fields,
-  malformed JSON, non-object body) MUST return 422.
+  malformed JSON, non-object body) MUST return 422 with the standard validation body: a `detail`
+  list in which each entry identifies the invalid field (location) and a human-readable reason.
 - **FR-024**: `GET /health` MUST return 200 `{"status": "ok"}`; a wrong method on `/v1/check` MUST
   return 405.
 - **FR-025**: No response MUST ever contain a stack trace or source-file path.
 - **FR-026**: The HTTP layer MUST use the same injected time source as the limiter.
+
+**Logging**
+
+- **FR-027**: The service MUST log only start-up information (which tier source was loaded) and
+  configuration or internal errors. It MUST NOT log per-request decisions or any secrets. Logging
+  is not covered by acceptance tests.
 
 ### Acceptance Criteria
 
@@ -247,8 +290,11 @@ applied and invalid configurations are rejected.
 - The service runs as a single process; "concurrent" means concurrent requests within that
   process.
 - Callers are trusted to report their own `client_id`; identity verification is out of scope.
-- Time values are in seconds from a monotonic source; `retry_after` and `reset` are whole seconds.
+- Time values are in seconds; `retry_after` and `reset` are whole seconds.
 
 ## Changelog
 
 - 2026-11-23: Initial specification from `speckit-prompts/02-specify.md`.
+- 2026-11-23: Clarification session (5 Q&A): added FR-014a (tier file via
+  `RATELIMITER_TIERS_FILE`) and FR-027 (logging); clarified FR-009 (monotonic default clock),
+  FR-019/FR-022 (empty tier → 422, unconfigured tier → 400), FR-023 (422 body). No AC/NFR changed.
