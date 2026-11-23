@@ -35,7 +35,7 @@ dev: `pytest`, `ruff` (already in locked `requirements-dev.txt`)
 **Performance Goals**: no latency target in the spec; bounded by provider: 60 s HTTP
 timeout, at most 2 model calls per review (1 + one parse retry)
 
-**Constraints**: input ≤ 20,000 chars; temperature 0.0 (≤ 0.2); max_tokens 2048; ≤ 10
+**Constraints**: input ≤ 20,000 chars; temperature 0.0 (≤ 0.2); max_tokens 8192; ≤ 10
 findings; credentials only from environment variables; no `.env` I/O; no suppression
 comments
 
@@ -139,14 +139,14 @@ retry), `ConfigurationError` (missing credentials/settings).
   text = concatenated `text` blocks.
 - `OpenAICompatibleClient`: `POST {LLM_BASE_URL}/chat/completions`, Bearer `LLM_API_KEY`
   (optional for local Ollama); text = `choices[0].message.content`.
-- Both: `temperature=0.0`, `max_tokens=2048`, `httpx` timeout 60 s. `httpx.TimeoutException`
+- Both: `temperature=0.0`, `max_tokens=8192`, `httpx` timeout 60 s. `httpx.TimeoutException`
   / `httpx.TransportError` and status 401/403/408/409/429/5xx/529 → `LLMServiceError`. Any
   other non-2xx (e.g. 400 malformed request, 404 unknown model, 422) is an application or
   configuration defect, NOT a service error (Constitution VI): raise plain `ReviewerError`
   with the status code and a short reason, never the key. A 2xx body that is not the
   expected provider JSON shape → `LLMServiceError`.
 - `build_client_from_env()`: `LLM_PROVIDER` (default `anthropic`). Anthropic needs
-  `ANTHROPIC_API_KEY`; `REVIEW_MODEL` defaults to `claude-haiku-5-5`. `openai_compatible`
+  `ANTHROPIC_API_KEY`; `REVIEW_MODEL` defaults to `claude-haiku-4-5`. `openai_compatible`
   needs `LLM_BASE_URL` and `REVIEW_MODEL`. Missing → `ConfigurationError`. Never logs keys.
 
 ### `service.py` [FR-002..FR-004, INV-001, INV-005, GR-002]

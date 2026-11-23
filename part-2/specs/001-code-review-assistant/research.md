@@ -72,10 +72,19 @@ and the alternatives rejected.
 
 ## R7. Model and sampling
 
-- **Decision**: `temperature=0.0`, `max_tokens=2048`; model from `REVIEW_MODEL`, defaulting to
-  `claude-haiku-5-5` for Anthropic; required for `openai_compatible`.
+- **Decision**: `temperature=0.0`, `max_tokens=8192`; model from `REVIEW_MODEL`, defaulting to
+  `claude-haiku-4-5` for Anthropic; required for `openai_compatible`.
 - **Rationale**: NFR-004 / Constitution VII (≤ 0.2, recorded via `describe()`); a fast small
   model keeps evaluation cost low; configurable for comparison runs.
+- **Amendment 2026-11-23 (human decision at `/speckit-implement`)**: the default was
+  `claude-haiku-5-5` with `max_tokens=2048` (from `speckit-prompts/04-plan.md`). The Claude API
+  reference shows Haiku 5.5 rejects any non-default `temperature` with HTTP 400, so it cannot
+  meet NFR-004 honestly (sending 0.0 fails; omitting it runs at 1.0). The default is now
+  `claude-haiku-4-5`, which accepts `temperature=0.0` with `anthropic-version: 2023-06-01`.
+  `max_tokens` is raised to 8192 so a reply with 10 findings and refactored code is not
+  truncated (truncation would be a structural FAIL). `REVIEW_MODEL` still overrides the model.
+- **Alternatives**: keep Haiku 5.5 and omit temperature (fails the harness's NFR-004 check);
+  make `openai_compatible` the default (quality depends on an unspecified model).
 
 ## R8. Prompt versioning
 

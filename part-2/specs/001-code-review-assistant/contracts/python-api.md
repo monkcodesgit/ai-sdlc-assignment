@@ -44,7 +44,7 @@ def build_client_from_env() -> LLMClient
 |---|---|
 | `LLM_PROVIDER` | `anthropic` (default) or `openai_compatible` |
 | `ANTHROPIC_API_KEY` | required for `anthropic` |
-| `REVIEW_MODEL` | model id; default `claude-haiku-5-5` for anthropic; required for `openai_compatible` |
+| `REVIEW_MODEL` | model id; default `claude-haiku-4-5` for anthropic; required for `openai_compatible` |
 | `LLM_BASE_URL` | required for `openai_compatible` (e.g. `http://localhost:11434/v1`) |
 | `LLM_API_KEY` | bearer token for `openai_compatible` (optional for local servers) |
 
