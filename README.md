@@ -8,7 +8,7 @@ Course: AI-Augmented SDLC (SEZG534), BITS Pilani. Student: Vishal Rathee.
 | 1A | Tiered Rate Limiter Microservice (deterministic) | `part-1/` |
 | 1B | Semantic Code Review & Refactoring Assistant (non-deterministic, LLM-backed) | `part-2/` |
 
-- Demo video: <link>
+- Demo video: <https://drive.google.com/file/d/1ChtQRXOzVkQqnRb4D63Y9tsgkzsnkeGA/view?usp=sharing>
 - Python: 3.11+
 
 ## Part 1A
